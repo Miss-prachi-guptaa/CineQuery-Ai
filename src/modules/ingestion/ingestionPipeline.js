@@ -9,6 +9,7 @@ import {
   processWithRetry,
 } from "./batchProcessor.js";
 import { extractMoviesFromBatch } from "./llmExtractor.js";
+import { insertMovie } from "../graph/graphInserter.js";
 
 import dotenv from "dotenv";
 dotenv.config({});
@@ -107,7 +108,18 @@ export const runIngestionPipeline = async () => {
       await new Promise(resolve => setTimeout(resolve, 9000)); // 9 seconds between calls
     }
 
+
     console.log(`\n🎉 Total extracted movies: ${finalData.length}`);
+
+    console.log("\n🚀 Inserting into Neo4j...");
+
+    for (let i = 0; i < finalData.length; i++) {
+      console.log(`📥 Inserting movie ${i + 1}/${finalData.length}`);
+
+      await insertMovie(finalData[i]);
+    }
+
+    console.log("🎉 All movies inserted into Neo4j!");
 
   } catch (err) {
     console.error("Pipeline Error:", err);

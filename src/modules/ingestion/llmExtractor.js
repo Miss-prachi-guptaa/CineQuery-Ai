@@ -47,7 +47,7 @@ Schema:
     "title": "",
     "director": "",
     "actors": [],
-    "genre": "",
+    "genre": [],
     "themes": [],
     "awards": []
   }
