@@ -9,12 +9,9 @@ import {
   processWithRetry,
 } from "./batchProcessor.js";
 import { extractMoviesFromBatch } from "./llmExtractor.js";
-import { insertMovie } from "../graph/graphInserter.js";
 
 import dotenv from "dotenv";
 dotenv.config({});
-
-
 
 // export const runIngestionPipeline = async () => {
 
@@ -82,7 +79,7 @@ export const runIngestionPipeline = async () => {
     console.log(text.slice(0, 1000));
 
     // 🔹 Step 2: Chunk into movies
-    const movies = splitMovies(text).slice(0, 50);
+    const movies = splitMovies(text);
     console.log(`✅ Total movies: ${movies.length}`);
     // 🔹 Step 3: Create SMALL batches (safe start)
     const batchSize = 6;
@@ -108,18 +105,39 @@ export const runIngestionPipeline = async () => {
       await new Promise(resolve => setTimeout(resolve, 9000)); // 9 seconds between calls
     }
 
-
     console.log(`\n🎉 Total extracted movies: ${finalData.length}`);
 
-    console.log("\n🚀 Inserting into Neo4j...");
+    // ✅ SAVE JSON
+    fs.writeFileSync(
+      "data/processed/movies.json",
+      JSON.stringify(finalData, null, 2)
+    );
 
-    for (let i = 0; i < finalData.length; i++) {
-      console.log(`📥 Inserting movie ${i + 1}/${finalData.length}`);
+    console.log("✅ movies.json saved!");
+    console.log("movie in json Ingestion complete")
 
-      await insertMovie(finalData[i]);
-    }
+    // console.log("\n🚀 Inserting into Neo4j...");
 
-    console.log("🎉 All movies inserted into Neo4j!");
+    // for (let i = 0; i < finalData.length; i++) {
+    //   console.log(`📥 Inserting movie ${i + 1}/${finalData.length}`);
+
+    //   await insertMovie(finalData[i]);
+    // }
+
+    // console.log("🎉 All movies inserted into Neo4j!");
+    // for (const movie of finalData) {
+
+
+    //   // 🔥 VECTOR PART
+    //   const text = buildEmbeddingText(movie);
+    //   const embedding = await getEmbedding(text);
+
+    //   await storeMovieEmbedding(movie, embedding);
+
+    //   console.log(`✅ Stored embedding for ${movie.title}`);
+    //   // ⏱ Delay to avoid HuggingFace rate limit
+    //   await new Promise(resolve => setTimeout(resolve, 2000));
+    // }
 
   } catch (err) {
     console.error("Pipeline Error:", err);

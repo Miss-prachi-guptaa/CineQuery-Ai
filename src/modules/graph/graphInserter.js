@@ -27,23 +27,20 @@ export const insertMovie = async (movie) => {
         MERGE (m)-[:HAS_THEME]->(t)
       )
 
-      FOREACH (award IN $awards |
-        MERGE (aw_type:AwardType {
-          name: split(award, " (")[0]
-        })
+    FOREACH (award IN $awards |
 
-        CREATE (win:AwardWin {
-          category: CASE 
-            WHEN award CONTAINS "(" 
-            THEN replace(split(award, "(")[1], ")", "")
-            ELSE null
-          END,
-          movie: $title
-        })
+  MERGE (aw_type:AwardType {
+    name: award.name
+  })
 
-        MERGE (m)-[:WON]->(win)
-        MERGE (win)-[:TYPE]->(aw_type)
-      )
+  CREATE (win:AwardWin {
+    category: award.category,
+    movie: $title
+  })
+
+  MERGE (m)-[:WON]->(win)
+  MERGE (win)-[:TYPE]->(aw_type)
+)
       `,
       {
         title: movie.title,
