@@ -4,9 +4,15 @@ import mongoose from "mongoose";
 import neo4j from "neo4j-driver";
 
 // MongoDB Connection
+// MongoDB Connection
 export const connectMongo = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(
+      process.env.MONGO_URI,
+      {
+        serverSelectionTimeoutMS: 30000,
+      }
+    );
     console.log("✅ MongoDB Connected");
   } catch (err) {
     console.error("❌ MongoDB Error:", err);
