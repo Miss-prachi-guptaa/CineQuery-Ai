@@ -90,7 +90,7 @@ export default function HomePage() {
     try {
       setLoading(true);
 
-      const response = await fetch("http://localhost:5000/query", {
+      const response = await fetch("https://cinequery-ai.onrender.com/query", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
