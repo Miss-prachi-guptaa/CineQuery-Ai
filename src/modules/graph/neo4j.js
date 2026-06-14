@@ -12,3 +12,17 @@ const driver = neo4j.driver(
 );
 
 export default driver;
+
+async function testConnection() {
+  try {
+    await driver.verifyConnectivity();
+
+    console.log("✅ Neo4j Connected");
+    console.log(await driver.getServerInfo());
+
+  } catch (err) {
+    console.error("❌ Neo4j Error FULL:", err);
+  }
+}
+
+testConnection();

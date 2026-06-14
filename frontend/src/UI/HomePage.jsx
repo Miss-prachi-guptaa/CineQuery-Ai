@@ -109,7 +109,7 @@ export default function HomePage() {
         setResults(demoResults);
       }
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
       setResults(demoResults);
     } finally {
       setLoading(false);

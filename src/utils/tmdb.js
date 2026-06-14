@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Fetch movie and actor metadata from TMDB API to enrich search results with posters, ratings, overviews, and images
+
 const API_KEY = process.env.TMDB_API_KEY;
 console.log("api key", API_KEY);
 

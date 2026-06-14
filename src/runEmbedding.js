@@ -3,6 +3,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// movies.json
+//    ↓
+// Build Semantic Text
+//    ↓
+// Generate Embedding
+//    ↓
+// Store Embedding in MongoDB
+//    ↓
+// Vector Search Ready
+
 import { buildEmbeddingText } from "./modules/vector/embeddingBuilder.js";
 import { getEmbedding } from "./modules/vector/embeddingService.js";
 import { storeMovieEmbedding } from "./modules/vector/vectorStore.js";

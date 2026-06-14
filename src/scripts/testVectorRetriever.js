@@ -1,19 +1,22 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { runGraphQuery } from "./modules/query/graphRetriever.js";
+import { runVectorSearch }
+  from "../modules/query/vectorRetriever.js";
 
 const run = async () => {
 
   const queries = [
-    "actors in movies directed by James Cameron"
+    "movies like inception",
+    "emotional space thriller",
+    "dark psychological movies"
   ];
 
   for (const q of queries) {
 
     console.log(`\n🎬 QUERY: ${q}`);
 
-    const result = await runGraphQuery(q);
+    const result = await runVectorSearch(q);
 
     console.log(result);
   }

@@ -1,5 +1,7 @@
 // src/modules/ingestion/ingestionPipeline.js
 
+// PDF → Text Extraction → Movie Chunking → Batch Processing → LLM Extraction → Structured JSON
+
 import fs from "fs";
 import { splitMovies } from "./chunker.js";
 import { parsePDF } from "./pdfParser.js";

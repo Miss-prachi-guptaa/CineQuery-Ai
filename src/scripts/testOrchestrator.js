@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { runQuery }
-  from "./modules/query/queryOrchestrator.js";
+  from "../modules/query/queryOrchestrator.js";
 
 const run = async () => {
 

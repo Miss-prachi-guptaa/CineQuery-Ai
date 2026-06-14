@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { classifyQuery } from "./modules/query/queryClassifier.js";
+import { classifyQuery } from "../modules/query/queryClassifier.js";
 
 const run = async () => {
 
